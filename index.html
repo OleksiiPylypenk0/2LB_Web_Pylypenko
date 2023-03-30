@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторна робота №2</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <label for="interval">Введіть інтервал даних (у мілісекундах):</label>
+  <input type="number" id="interval" value="100">
+  <button onclick="startGenerating()">Start</button>
+  <button onclick="stopGenerating()">Stop</button>
+
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Колонка 1</th>
+        <th>Колонка 2</th>
+        <th>Колонка 3</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <script>
+    let intervalId;
+
+    function startGenerating() {
+      const interval = document.getElementById("interval").value;
+      intervalId = setInterval(generateRow, interval);
+    }
+
+    function stopGenerating() {
+      clearInterval(intervalId);
+    }
+
+    function generateRow() {
+      const table = document.getElementById("dataTable");
+      const tbody = table.querySelector("tbody");
+      const newRow = document.createElement("tr");
+
+      for (let i = 0; i < 3; i++) {
+        const randomData = Math.floor(Math.random() * 1000);
+        const newCell = document.createElement("td");
+        newCell.textContent = randomData;
+        newRow.appendChild(newCell);
+      }
+
+      const rowCount = tbody.childElementCount;
+      if (rowCount % 2 === 0) {
+        newRow.classList.add("evenRow");
+      } else {
+        newRow.classList.add("oddRow");
+      }
+
+      tbody.appendChild(newRow);
+    }
+  </script>
+</body>
+</html>
